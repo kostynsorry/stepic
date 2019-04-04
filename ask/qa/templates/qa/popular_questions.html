@@ -1,0 +1,17 @@
+{% extends "qa/base.html" %}
+{% block title %} Popular questions {% endblock %}
+
+{% block content %}
+{% for q in page.object_list %}
+    <div><a href="/questions/{{ q.id }}"> {{ q.title }} </a></div>
+{% endfor %}
+
+<nav>
+    {% for p in paginator.page_range %}
+    <li>
+        <a href="{{paginator.baseurl}}?page={{p}}">
+            {{p}}</a>
+    </li>
+    {%endfor%}
+</nav>
+{% endblock %}

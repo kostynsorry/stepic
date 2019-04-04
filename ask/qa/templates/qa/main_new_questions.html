@@ -1,0 +1,26 @@
+{#<!DOCTYPE html>#}
+{#<html lang="ru">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Main</title>#}
+{#</head>#}
+{#<body>#}
+{% extends "qa/base.html" %}
+{% block title %} Main Questions {% endblock %}
+
+{% block content %}
+{% for q in page.object_list %}
+    <div><a href="/questions/{{ q.id }}"> {{ q.title }} </a></div>
+{% endfor %}
+
+<nav>
+    {% for p in paginator.page_range %}
+    <li>
+        <a href="{{paginator.baseurl}}?page={{p}}">
+            {{p}}</a>
+    </li>
+    {%endfor%}
+</nav>
+{% endblock %}
+{#</body>#}
+{#</html>#}
