@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.urls import reverse
 from .models import Question, Answer
 from django.core.paginator import Paginator
@@ -49,8 +49,11 @@ def popular(request):
 # Детали вопроса
 def detail(request, index):
     question = Question.objects.filter(id=index).first()
-    answers = Answer.objects.all().filter(question__id=index)
+    if question:
+        answers = Answer.objects.all().filter(question__id=index)
 
-    return render(request, 'qa/detail_question.html',
-                  {'question': question,
-                   'answers': answers})
+        return render(request, 'qa/detail_question.html',
+                      {'question': question,
+                       'answers': answers})
+    else:
+        raise Http404
