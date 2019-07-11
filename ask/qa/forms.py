@@ -33,6 +33,16 @@ class AskForm(forms.Form):
     text = forms.CharField()
     author = forms.ModelChoiceField(queryset=User.objects.all())
 
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        if not title:
+            raise forms.ValidationError('Не указан title')
+
+    def clean_text(self):
+        text = self.cleaned_data.get('text')
+        if not text:
+            raise forms.ValidationError('Нет текста вопроса')
+
 
 class AnswerForm(forms.Form):
     text = forms.CharField()
