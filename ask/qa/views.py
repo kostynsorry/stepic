@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.urls import reverse
+
+from ask.qa.forms import AskForm
 from .models import Question, Answer
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -57,3 +59,13 @@ def detail(request, index):
                        'answers': answers})
     else:
         raise Http404
+
+
+# Форма для вопроса
+def add_question(request):
+    if request.method == 'POST':
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
