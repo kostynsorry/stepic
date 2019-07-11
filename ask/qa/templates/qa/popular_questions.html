@@ -3,7 +3,7 @@
 
 {% block content %}
 {% for q in page.object_list %}
-    <div><a href="/questions/{{ q.id }}"> {{ q.title }} </a></div>
+    <div><a href="/question/{{ q.id }}"> {{ q.title }} </a></div>
 {% endfor %}
 
 <nav>
