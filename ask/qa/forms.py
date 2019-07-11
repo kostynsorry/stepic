@@ -38,3 +38,13 @@ class AnswerForm(forms.Form):
     text = forms.CharField()
     question = forms.ModelChoiceField(queryset=Question.objects.all())
     author = forms.ModelChoiceField(queryset=User.objects.all())
+
+    def clean_text(self):
+        text = self.cleaned_data.get('text')
+        if not text:
+            raise forms.ValidationError('Нет текста')
+
+    def clean_question(self):
+        question = self.cleaned_data.get('question')
+        if not question:
+            raise forms.ValidationError('Не выбран вопрос')
