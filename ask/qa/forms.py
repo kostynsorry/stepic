@@ -23,10 +23,18 @@
 #   При POST запросе форма AnswerForm добавляет новый ответ и перенаправляет на страницу вопроса /question/123/.
 #   Для поддержки CSRF защиты - выведите в шаблонах форм {% csrf_token %}.
 from django import forms
+from django.contrib.auth.models import User
+
+from ask.qa.models import Question
 
 
 class AskForm(forms.Form):
-    pass
+    title = forms.CharField(max_length=220)
+    text = forms.CharField()
+    author = forms.ModelChoiceField(queryset=User.objects.all())
+
 
 class AnswerForm(forms.Form):
-    pass
+    text = forms.CharField()
+    question = forms.ModelChoiceField(queryset=Question.objects.all())
+    author = forms.ModelChoiceField(queryset=User.objects.all())
