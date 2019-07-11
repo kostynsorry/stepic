@@ -25,7 +25,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from ask.qa.models import Question
+from ask.qa.models import Question, Answer
 
 
 class AskForm(forms.Form):
@@ -43,6 +43,11 @@ class AskForm(forms.Form):
         if not text:
             raise forms.ValidationError('Нет текста вопроса')
 
+    def save(self):
+        question = Question(**self.cleaned_data)
+        question.save()
+        return question
+
 
 class AnswerForm(forms.Form):
     text = forms.CharField()
@@ -58,3 +63,8 @@ class AnswerForm(forms.Form):
         question = self.cleaned_data.get('question')
         if not question:
             raise forms.ValidationError('Не выбран вопрос')
+
+    def save(self):
+        ans = Answer(**self.cleaned_data)
+        ans.save()
+        return ans
