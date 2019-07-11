@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
+from django.http import HttpRequest
+from django.urls import reverse
+
 
 class QuestionManager(models.Manager):
     def new(self):
@@ -21,6 +24,8 @@ class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='likes_set', blank=True)
 
+    def get_url(self):
+        HttpRequest.build_absolute_uri(reverse('question'))
 
 class Answer(models.Model):
     text = models.TextField()

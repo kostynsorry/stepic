@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # todo: 1) Разверните репозиторий со своим проектом в директорию /home/box
-#       2) В файле qa/forms.py  создайте следующие формы для добавления вопроса и ответа.
+#       2) В файле qa/form.py  создайте следующие формы для добавления вопроса и ответа.
 #           AskForm - форма добавления вопроса
 #           title - поле заголовка
 #           text - поле текста вопроса
@@ -25,7 +25,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from ask.qa.models import Question, Answer
+from .models import Question, Answer
 
 
 class AskForm(forms.Form):
