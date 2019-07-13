@@ -67,5 +67,8 @@ def add_question(request):
         form = AskForm(request.POST)
         if form.is_valid():
             question = form.save()
-            url = question.get_url()
+            url = question.get_url(request)
             return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'qa/add_ask.html', {'form': form})

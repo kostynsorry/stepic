@@ -1,0 +1,7 @@
+{% extends "qa/base.html" %}
+{% block content %}
+ <form method="POST" class="post-form">{% csrf_token %}
+    {{ form.as_ul }}
+     <button type="submit" class="save btn btn-default">Save</button>
+ </form>
+{% endblock %}

@@ -24,8 +24,9 @@ class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='likes_set', blank=True)
 
-    def get_url(self):
-        HttpRequest.build_absolute_uri(reverse('question'))
+    def get_url(self, request):
+        return request.build_absolute_uri(reverse('question', kwargs={'index': self.id}))
+
 
 class Answer(models.Model):
     text = models.TextField()
