@@ -62,11 +62,15 @@ class AnswerForm(forms.Form):
         text = self.cleaned_data.get('text')
         if not text:
             raise forms.ValidationError('Нет текста')
+        else:
+            return text
 
     def clean_question(self):
         question = self.cleaned_data.get('question')
         if not question:
             raise forms.ValidationError('Не выбран вопрос')
+        else:
+            return question
 
     def save(self):
         ans = Answer(**self.cleaned_data)

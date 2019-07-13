@@ -6,4 +6,8 @@
             <div><h3>{{ answer.text }}</h3></div>
         {% endfor %}
     </div>
+ <form method="POST" class="post-form">{% csrf_token %}
+    {{ form.as_ul }}
+     <button type="submit" class="save btn btn-default">Save</button>
+ </form>
 {% endblock %}

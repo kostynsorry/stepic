@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.urls import reverse
 
-from .form import AskForm
+from .form import AskForm, AnswerForm
 from .models import Question, Answer
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -51,14 +51,22 @@ def popular(request):
 # Детали вопроса
 def detail(request, index):
     question = Question.objects.filter(id=index).first()
-    if question:
-        answers = Answer.objects.all().filter(question__id=index)
-
-        return render(request, 'qa/detail_question.html',
-                      {'question': question,
-                       'answers': answers})
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            url = question.get_url(request)
+            return HttpResponseRedirect(url)
     else:
-        raise Http404
+        if question:
+            answers = Answer.objects.all().filter(question__id=index)
+            form = AnswerForm()
+            return render(request, 'qa/detail_question.html',
+                          {'question': question,
+                           'answers': answers,
+                           'form': form})
+        else:
+            raise Http404
 
 
 # Форма для вопроса
